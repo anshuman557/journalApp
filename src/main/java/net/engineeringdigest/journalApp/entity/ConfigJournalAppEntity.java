@@ -1,9 +1,7 @@
 package net.engineeringdigest.journalApp.entity;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,26 +12,12 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "users")
+@Document(collection = "config_journal_app")
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class User {
-  @Id
- private  ObjectId id;
-  @Indexed(unique = true)
-  @NonNull
- private String username;
- private String email;
- private String sentimentAnalysis;
- @NonNull
- private String password;
-
- @DBRef
- private List<JournalEntry> journalEntries=new ArrayList<>();
-
- private List<String> roles;
+public class ConfigJournalAppEntity {
+ private  String key;
+ private String value;
 
 
 }

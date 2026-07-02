@@ -1,14 +1,17 @@
 package net.engineeringdigest.journalApp.controller;
 
+import net.engineeringdigest.journalApp.api.response.WeatherResponse;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.repository.UserRepository;
 import net.engineeringdigest.journalApp.service.UserService;
+import net.engineeringdigest.journalApp.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,8 @@ public class UserController {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private WeatherService weatherService;
 //  @GetMapping
 //  public List<User> getAllUsers() {
 
@@ -71,6 +76,17 @@ public class UserController {
     }catch (Exception e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @GetMapping
+  public ResponseEntity<?> greeting() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    WeatherResponse weatherResponse = weatherService.getWeather("Patna", "India");
+    String greeting="";
+    if(weatherResponse!=null) {
+      greeting=" Weather feels like "+ weatherResponse.getCurrent().getTempC() + " C";
+    }
+    return new ResponseEntity<>("Hi " + authentication.getName()+ greeting ,HttpStatus.OK);
   }
 
 }

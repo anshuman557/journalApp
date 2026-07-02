@@ -3,6 +3,7 @@ package net.engineeringdigest.journalApp.controller;
 
 import java.util.List;
 import java.util.Optional;
+import net.engineeringdigest.journalApp.cache.AppCache;
 import net.engineeringdigest.journalApp.entity.User;
 import net.engineeringdigest.journalApp.service.UserService;
 import org.bson.types.ObjectId;
@@ -25,6 +26,9 @@ public class AdminController {
   @Autowired
   private UserService userService;
 
+  @Autowired
+  private AppCache appCache;
+
   @GetMapping("/all-users")
   public ResponseEntity<?> getAllUsers() {
     List<User> all = userService.getAll();
@@ -35,11 +39,10 @@ public class AdminController {
     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
   }
 
-  @PostMapping("/create")
+  @PostMapping("/create-admin-user")
   public void createUser(@RequestBody User user) {
     userService.saveAdmin(user);
   }
-
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<String> deleteUser(@PathVariable ObjectId id) {
 
@@ -51,5 +54,10 @@ public class AdminController {
     }
 
     return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+  }
+
+  @GetMapping("clear-app-cache")
+  public void clearAppCache() {
+    appCache.init();
   }
 }
