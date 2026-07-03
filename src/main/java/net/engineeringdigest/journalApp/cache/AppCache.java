@@ -21,30 +21,30 @@ public class AppCache {
 
   public Map <String , String> app_Cache;
 
-//  @PostConstruct
-//  public void init(){
+
+  //  @PostConstruct
+//  public void init() {
 //    app_Cache = new HashMap<>();
 //    List<ConfigJournalAppEntity> all = configJournalAppRepository.findAll();
-//    for(ConfigJournalAppEntity configJournalAppEntity : all){
+//    for (ConfigJournalAppEntity configJournalAppEntity : all) {
 //      app_Cache.put(configJournalAppEntity.getKey(), configJournalAppEntity.getValue());
+//      System.out.println(
+//          configJournalAppEntity.getKey() + " -> " +
+//              configJournalAppEntity.getValue()
+//      );
 //    }
+//    System.out.println(app_Cache);
 //  }
 
   @PostConstruct
-  public void init() {
+  public void init(){
     app_Cache = new HashMap<>();
-
     List<ConfigJournalAppEntity> all = configJournalAppRepository.findAll();
-
-    for (ConfigJournalAppEntity configJournalAppEntity : all) {
+    for(ConfigJournalAppEntity configJournalAppEntity : all){
       app_Cache.put(configJournalAppEntity.getKey(), configJournalAppEntity.getValue());
-
-      System.out.println(
-          configJournalAppEntity.getKey() + " -> " +
-              configJournalAppEntity.getValue()
-      );
     }
-
-    System.out.println(app_Cache);
   }
+
+
+
 }
