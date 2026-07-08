@@ -60,6 +60,7 @@ public class UserController {
         userInDb.setUsername(user.getUsername());
         userInDb.setPassword(user.getPassword());
         userInDb.setEmail(user.getEmail());
+        userInDb.setSentimentAnalysis(user.getSentimentAnalysis());
         userService.saveNewUser(userInDb);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }catch (Exception e) {
@@ -81,7 +82,7 @@ public class UserController {
   @GetMapping
   public ResponseEntity<?> greeting() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    WeatherResponse weatherResponse = weatherService.getWeather("Patna", "India");
+     WeatherResponse weatherResponse = weatherService.getWeather("Rupnagar", "India");
     String greeting="";
     if(weatherResponse!=null) {
       greeting=" Weather feels like "+ weatherResponse.getCurrent().getTempC() + " C";
